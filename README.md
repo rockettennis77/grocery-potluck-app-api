@@ -141,6 +141,7 @@ Contains sample task descriptions. Edit if you want, I don't care.
 3. If you think something you’re doing might not be acceptable, please ask on Piazza.
 
 ## Environment Setup Guide
+0. Invite "UIUCWP-Bot" as the collaborator on GitHub or "uiuc-web-programming" on GitLab. If you use GitLab, make sure to invite the account as a reporter, not a guest, otherwise we can't see your code.
 1. Clone the repository:
 `git clone https://github.com/uiuc-web-programming/mp3_starter_19.git mp3`, then `cd mp3`
 2. Install dependencies:
