@@ -11,7 +11,7 @@ module.exports = function (router) {
         db.on('error', console.error.bind(console, 'connection error:'));
         db.once('open', function() {
             var params = req.body;
-            if(id in params){
+            if('id' in params){
                 var q = Ingredient.findOne({id: params.id});
                 q.then((u) => {
                     res.status(201).send({"message": "OK", "data": u});

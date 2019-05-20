@@ -12,13 +12,13 @@ module.exports = function (router) {
         db.once('open', function() {
             var params = req.params;
             var query = Recipe.find()
-            if(id in params){
+            if('id' in params){
                 query = Recipe.find({RecipeID: params.id});
             }
-            if(name in params){
+            if('name' in params){
                 query = Recipe.find({RecipeName: params.name});
             }
-            if(ingredients in params){
+            if('ingredients' in params){
                 query.all('Ingreds', params.ingredients);
             }
             query.exec(function(err,result){
