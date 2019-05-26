@@ -1,0 +1,28 @@
+{
+  "name": "potluck_app",
+  "version": "1.0.0",
+  "description": "Grocery Store App",
+  "authors": [
+    "Adam Burkett <adamburkett77@gmail.com"
+  ],
+  "scripts": {
+    "start": "nodemon --exec node server.js"
+  },
+  "babel": {
+    "presets": [
+      "env",
+      "react"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/uiuc-web-programming/mp3_starter_17.git"
+  },
+  "dependencies": {
+    "bcrypt": "^3.0.6",
+    "body-parser": "^1.17.2",
+    "express": "^4.15.3",
+    "mongoose": "^5.4.18",
+    "nodemon": "^1.11.0"
+  }
+}
