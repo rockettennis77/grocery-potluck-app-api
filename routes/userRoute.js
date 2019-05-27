@@ -15,8 +15,8 @@ module.exports = function (router) {
             if("username" in req.query && "password" in req.query){
                 q = User.findOne({"username": req.query.username});
                 q.then((u) => {
-                    u.comparePassword(req.query.password, (err, match) => {
-                        if(err != null){
+                    u.comparePassword(req.query.password, (match) => {
+                        if(match == false){
                             res.status(500).send({"message": "Incorrect password", "data": {}})
                         }
                         else {

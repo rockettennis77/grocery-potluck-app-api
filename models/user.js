@@ -27,14 +27,9 @@ UserSchema.pre('save', function(next) {
     });
 });
 
-UserSchema.methods.comparePassword = function(attempt, handler) {
+UserSchema.methods.comparePassword = function(attempt, handlr) {
     bcrypt.compare(attempt, this.password, (err, res) => {
-        if(err){
-            return handler(err);
-        }
-        else{
-            return handler(null, res);
-        }
+        handlr(res);
     });
 }
 // Export the Mongoose model
