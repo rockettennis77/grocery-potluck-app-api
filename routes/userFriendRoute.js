@@ -40,7 +40,7 @@ module.exports = function (router) {
                         res.status(500).send({"message": "No User found", "data": {}})
                     }
                     u.comparePassword(password, (err, match) => {
-                        if(err != null){
+                        if(match == false){
                             res.status(500).send({"message": "Incorrect password", "data": {}})
                         }
                         else {
@@ -77,7 +77,7 @@ module.exports = function (router) {
                 q2 = User.findOne({"_id": friendID});
                 q.then((u) => {
                     u.comparePassword(password, (err, match) => {
-                        if(err != null){
+                        if(match == false){
                             res.status(500).send({"message": "Incorrect password", "data": {}})
                         }
                         else {

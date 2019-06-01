@@ -12,17 +12,24 @@ module.exports = function (router) {
         var db = mongoose.connection;
         db.on('error', console.error.bind(console, 'connection error:'));
         db.once('open', function() {
-            var userID = req.body.userID;
-            var q = User.findOne({"_id": userID});
-            q.select('IngredientsAvailable');
-            q.exec().then((u) => {
-                res.status(200).send({
-                    "message": "OK",
-                    "data": u
+            if('userID' in req.query){
+                var q1 = User.findOne({_id: req.query.userID});
+                q1.then((usr) => {
+                    var grocIDs = usr.IngredientsAvailable;
+                    var q2 = Ingredient.find({_id: {$in : grocIDs}});
+                    q2.then((u) => {
+                        res.status(201).send({"message": "OK", "data": u});
+                        mongoose.disconnect();
+                    }).catch((err) => {
+                        res.status(500).send({"message": "WTF"});
+                    });  
                 })
-            })
-            });
+            }
+            else {
+                res.status(500).send({"message": "No userID specified", "data": {}});
+            }
         });
+    });
 
     
     userIngredientRoute.post(function (req, res) {
@@ -42,7 +49,7 @@ module.exports = function (router) {
                         res.status(500).send({"message": "User not found", "data": {}})
                     }
                     u.comparePassword(password, (err, match) => {
-                        if(err != null){
+                        if(match == false){
                             res.status(500).send({"message": "Incorrect password", "data": {}})
                         }
                         else {
@@ -82,7 +89,7 @@ module.exports = function (router) {
                         res.status(500).send({"message": "User not found", "data": {}})
                     }
                     u.comparePassword(password, (err, match) => {
-                        if(err != null){
+                        if(match == false){
                             res.status(500).send({"message": "Incorrect password", "data": {}})
                         }
                         else {
