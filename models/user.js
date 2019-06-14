@@ -1,6 +1,7 @@
 // Load required packages
 var mongoose = require('mongoose');
 var bcrypt = require('bcrypt');
+var Schema = mongoose.Schema;
 
 // Define our user schema
 var UserSchema = new mongoose.Schema({
@@ -9,7 +10,8 @@ var UserSchema = new mongoose.Schema({
     fullName: String,
     password: String,
     Friends: [String],
-    IngredientsAvailable: [String]
+    GroceryListID: {type: Schema.Types.ObjectId, ref: 'GroceryList'},
+    PantryListID: {type: Schema.Types.ObjectId, ref: 'PantryList'}
 },{collection: 'users'});
 
 UserSchema.pre('save', function(next) {

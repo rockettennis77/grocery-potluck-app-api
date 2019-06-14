@@ -1,6 +1,8 @@
 var secrets = require('../config/secrets');
 var mongoose = require('mongoose');
 var User = require('../models/user');
+var GroceryList = require('../models/groceryList');
+var PantryList = require('../models/pantryList');
 var bcrypt = require('bcrypt');
 
 module.exports = function (router) {
@@ -64,7 +66,7 @@ module.exports = function (router) {
                 q = User.findOne({"username": req.body.username});
                 q.then((u) => {
                     u.comparePassword(req.body.password, (err, match) => {
-                        if(err != null){
+                        if(match == false){
                             res.status(500).send({"message": "Incorrect password", "data": {}})
                         }
                         else {
@@ -87,11 +89,18 @@ module.exports = function (router) {
         db.once('open', function() {
             var params = req.body;
             var newUser = new User(params)
-            newUser.save().then(function(u){
-                res.status(201).send({"message": "OK", "data": u});
-                mongoose.disconnect();
+            var newPantry = new PantryList();
+            var newGroc = new GroceryList();
+            newUser.PantryListID = newPantry._id;
+            newUser.GroceryListID = newGroc._id;
+            newPantry.save().then(function(p){
+                newGroc.save().then(function(g){
+                    newUser.save().then(function(u){
+                        res.status(201).send({"message": "OK", "data": u});
+                        mongoose.disconnect();
+                    });
+                });
             });
-
         });
     });
 
@@ -108,7 +117,7 @@ module.exports = function (router) {
                         res.status(500).send({"message": "Could not find user", "data": {}});
                     }
                     u.comparePassword(req.body.password, (err, match) => {
-                        if(err != null){
+                        if(match == false){
                             res.status(500).send({"message": "Incorrect password", "data": {}});
                         }
                         else {
