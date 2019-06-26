@@ -8,6 +8,7 @@ var RecipeSchema = new mongoose.Schema({
    Instructions: String,
    RecipePic: String,
    Ingreds: [String],
+   IngredsAlterations: [String],
    Amounts: [String]
 },{collection: 'recipes'});
 

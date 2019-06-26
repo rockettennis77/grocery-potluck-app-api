@@ -39,6 +39,29 @@ module.exports = function (router) {
         });         
     });
 
+    recipeRoute.put(function(req,res){
+        mongoose.connect(secrets.mongo_connection, {useNewUrlParser: true});
+        mongoose.set('useFindAndModify', false);
+        var db = mongoose.connection;
+        db.on('error', console.error.bind(console, 'connection error:'));
+        db.once('open', function() {
+            var params = req.body;
+            if("_id" in params){
+                Recipe.findOne({"_id": params._id}).then((doc) => {
+                    for(key in params){
+                        doc[key] = params[key]
+                    }
+                    return doc.save()
+                }).then((u) => {
+                    res.status(200).send({"message": "Recipe Updated", "data": u})
+                    mongoose.disconnect();
+                }).catch((err) => {
+                    res.status(500).send({"message": "500 Server Error", "data": err})
+                    mongoose.disconnect();
+                }) 
+            }          
+        });
+    });
     
     recipeRoute.post(function (req, res) {
         mongoose.connect(secrets.mongo_connection, {useNewUrlParser: true});
