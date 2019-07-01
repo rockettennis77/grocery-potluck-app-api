@@ -41,7 +41,7 @@ module.exports = function (router) {
                 });
             }
             else if("_id" in req.query){
-                    q = GroceryList.findOne({"_id": req.query.groceryListID});
+                    q = GroceryList.findOne({"_id": req.query._id});
                     q.exec(function(err,result){
                         if(err){
                             res.status(500);
