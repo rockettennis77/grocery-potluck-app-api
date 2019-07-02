@@ -22,6 +22,7 @@ module.exports = function (router) {
                             message: "User Server Error",
                             data: err
                         });
+                        mongoose.disconnect();
                     }
                     var pantryID = result.PantryListID;
                     q2 = PantryList.findOne({"_id": pantryID});
@@ -32,11 +33,13 @@ module.exports = function (router) {
                                 message: "Pantry Server Error",
                                 data: err2
                             });
+                            mongoose.disconnect();
                         }
                         res.status(200).send({
                             "message": "OK", 
                             "data": res2
                         })
+                        mongoose.disconnect();
                     })
                 });
             }
@@ -49,6 +52,7 @@ module.exports = function (router) {
                                 message: "Server Error",
                                 data: err
                             });
+                            mongoose.disconnect();
                         }
                         res.status(200);
                         res.json({ 
@@ -85,6 +89,7 @@ module.exports = function (router) {
                                         message: "Server Error",
                                         data: err2
                                     });
+                                    mongoose.disconnect();
                                 }
                                 else{
                                     if(pList != null){
@@ -95,9 +100,11 @@ module.exports = function (router) {
                                         pList.save().then(function(d) {
                                             res.status(200).send({"message": "Pantry Item Added", "data": d})
                                         });
+                                        mongoose.disconnect();
                                     }
                                     else{
                                         res.status(200).send({"message": "Ingredient not Found", "data": {}})
+                                        mongoose.disconnect();
                                     }
                                 }
                             });
@@ -133,6 +140,7 @@ module.exports = function (router) {
                                         message: "Server Error",
                                         data: err2
                                     });
+                                    mongoose.disconnect();
                                 }
                                 else{
                                     var index = pList.PantryIngredients.indexOf(params.ingredientID);
@@ -143,9 +151,11 @@ module.exports = function (router) {
                                         pList.save().then(function(d) {
                                             res.status(200).send({"message": "Pantry Item Deleted", "data": d})
                                         });
+                                        mongoose.disconnect();
                                     }
                                     else{
                                         res.status(200).send({"message": "Item not found in Pantry", "data": {}})
+                                        mongoose.disconnect();
                                     }
                                 }
                             });
