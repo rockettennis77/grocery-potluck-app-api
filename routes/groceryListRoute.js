@@ -78,6 +78,7 @@ module.exports = function (router) {
                             res.status(500).send({"message": "Incorrect password", "data": {}});
                         }
                         else {
+                            res.status(500).send({"message": "Incorrect password", "data": u});
                             var q2 = GroceryList.findOne({"_id": u.groceryListID});
                             q2.exec(function(err2, pList){
                                 if(err2){
