@@ -37,8 +37,6 @@ module.exports = function (router) {
                 q.then((u) => {
                     res.status(201).send({"message": "OK", "data": u});
                     mongoose.disconnect();
-                }).catch((err) => {
-                    res.status(500).send();
                 });
             }
         });
