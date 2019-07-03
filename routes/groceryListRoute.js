@@ -98,9 +98,9 @@ module.exports = function (router) {
                                         pList.GroceryDescriptions.push(params.ingredientDescription);
                                         pList.GroceryDates.push(newDate);
                                         pList.save().then(function(d) {
-                                            res.status(200).send({"message": "Grocery Item Added", "data": d})
+                                            res.status(200).send({"message": "Grocery Item Added", "data": d});
+                                            mongoose.disconnect();
                                         });
-                                        mongoose.disconnect();
                                     }
                                     else{
                                         res.status(200).send({"message": "Ingredient not Found", "data": {}})
@@ -149,10 +149,9 @@ module.exports = function (router) {
                                         pList.GroceryDescriptions.splice(index, 1);
                                         pList.GroceryDates.splice(index, 1);
                                         pList.save().then(function(d) {
-                                            res.status(200).send({"message": "Grocery Item Deleted", "data": d})
-                                        });
-                                        mongoose.disconnect();
-                                    }
+                                            res.status(200).send({"message": "Grocery Item Deleted", "data": d});
+                                            mongoose.disconnect();
+                                        });                                    }
                                     else{
                                         res.status(200).send({"message": "Item not found in Grocery", "data": {}})
                                         mongoose.disconnect();

@@ -98,9 +98,9 @@ module.exports = function (router) {
                                         pList.PantryDescriptions.push(params.ingredientDescription);
                                         pList.PantryDates.push(newDate);
                                         pList.save().then(function(d) {
-                                            res.status(200).send({"message": "Pantry Item Added", "data": d})
+                                            res.status(200).send({"message": "Pantry Item Added", "data": d});
+                                            mongoose.disconnect();
                                         });
-                                        mongoose.disconnect();
                                     }
                                     else{
                                         res.status(200).send({"message": "Ingredient not Found", "data": {}})
@@ -144,14 +144,14 @@ module.exports = function (router) {
                                 }
                                 else{
                                     var index = pList.PantryIngredients.indexOf(params.ingredientID);
-                                    if(index != -1){
+                                    if(index >= 0){
                                         pList.PantryIngredients.splice(index, 1);
                                         pList.PantryDescriptions.splice(index, 1);
                                         pList.PantryDates.splice(index, 1);
                                         pList.save().then(function(d) {
-                                            res.status(200).send({"message": "Pantry Item Deleted", "data": d})
+                                            res.status(200).send({"message": "Pantry Item Deleted", "data": d});
+                                            mongoose.disconnect();
                                         });
-                                        mongoose.disconnect();
                                     }
                                     else{
                                         res.status(200).send({"message": "Item not found in Pantry", "data": {}})
