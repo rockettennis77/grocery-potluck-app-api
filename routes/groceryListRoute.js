@@ -133,7 +133,7 @@ module.exports = function (router) {
                             res.status(500).send({"message": "Incorrect password", "data": {}});
                         }
                         else {
-                            var q2 = GroceryList.findOne({"_id": u.groceryListID});
+                            var q2 = GroceryList.findOne({"_id": u.GroceryListID});
                             q2.exec(function(err2, pList){
                                 if(err2){
                                     res.status(500).send({ 
@@ -143,6 +143,7 @@ module.exports = function (router) {
                                     mongoose.disconnect();
                                 }
                                 else{
+                                    res.status(200).send({"message": "Grocery Item Deleted", "data": pList});
                                     var index = pList.GroceryIngredients.indexOf(params.ingredientID);
                                     if(index != -1){
                                         pList.GroceryIngredients.splice(index, 1);
