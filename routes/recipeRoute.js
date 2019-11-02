@@ -12,8 +12,14 @@ module.exports = function (router) {
         db.once('open', function() {
             var params = req.params;
             var query = Recipe.find()
-            if('id' in params){
-                query = Recipe.find({_id: params.id});
+            if('_id' in req.query){
+                var q = Recipe.findOne({_id: req.query._id});
+                q.then((u) => {
+                    res.status(201).send({"message": "OK", "data": u});
+                    mongoose.disconnect();
+                }).catch((err) => {
+                    res.status(500).send();
+                });  
             }
             if('name' in params){
                 query = Recipe.find({RecipeName: params.name});
