@@ -13,7 +13,7 @@ module.exports = function (router) {
             var params = req.params;
             var query = Recipe.find()
             if('id' in params){
-                query = Recipe.find({RecipeID: params.id});
+                query = Recipe.find({_id: params.id});
             }
             if('name' in params){
                 query = Recipe.find({RecipeName: params.name});
