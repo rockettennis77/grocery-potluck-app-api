@@ -19,7 +19,7 @@
     "url": "https://github.com/uiuc-web-programming/mp3_starter_17.git"
   },
   "dependencies": {
-    "bcrypt": "^3.0.6",
+    "bcrypt": "^5.0.0",
     "body-parser": "^1.17.2",
     "express": "^4.15.3",
     "mongoose": "^5.4.18",
